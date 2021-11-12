@@ -14,10 +14,6 @@ const User = require("../models/User.model");
 const isLoggedOut = require("../middleware/isLoggedOut");
 const isLoggedIn = require("../middleware/isLoggedIn");
 
-router.get("/loggedin", (req, res) => {
-  res.json(req.user);
-});
-
 router.post("/signup", isLoggedOut, (req, res) => {
   const { username, password } = req.body;
 
@@ -33,7 +29,7 @@ router.post("/signup", isLoggedOut, (req, res) => {
     });
   }
 
-  /*/Ensure strong passwords
+  //Ensure strong passwords
   const regex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
 
   if (!regex.test(password)) {
@@ -41,7 +37,7 @@ router.post("/signup", isLoggedOut, (req, res) => {
       errorMessage:
         "Password needs to have at least 8 chars and must contain at least one number, one lowercase and one uppercase letter.",
     });
-  }*/
+  }
 
   // Search the database for a user with the username submitted in the form
   User.findOne({ username }).then((found) => {
@@ -130,8 +126,12 @@ router.get("/logout", isLoggedIn, (req, res) => {
     if (err) {
       return res.status(500).json({ errorMessage: err.message });
     }
-    res.json({ message: "Successful Log out" });
+    res.json({ message: "Successful Log out, see you soon!" });
   });
+});
+
+router.get("/loggedin", (req, res) => {
+  res.json(req.user);
 });
 
 module.exports = router;
