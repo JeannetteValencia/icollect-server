@@ -24,7 +24,7 @@ router.post("/signup", isLoggedOut, (req, res) => {
   if (!username) {
     return res
       .status(400)
-      .json({ errorMessage: "Please provide your username." });
+      .json({ errorMessage: "Username is required" });
   }
 
   if (password.length < 8) {
@@ -33,8 +33,7 @@ router.post("/signup", isLoggedOut, (req, res) => {
     });
   }
 
-  //   ! This use case is using a regular expression to control for special characters and min length
-  /*
+  /*/Ensure strong passwords
   const regex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
 
   if (!regex.test(password)) {
@@ -42,8 +41,7 @@ router.post("/signup", isLoggedOut, (req, res) => {
       errorMessage:
         "Password needs to have at least 8 chars and must contain at least one number, one lowercase and one uppercase letter.",
     });
-  }
-  */
+  }*/
 
   // Search the database for a user with the username submitted in the form
   User.findOne({ username }).then((found) => {
@@ -89,7 +87,7 @@ router.post("/login", isLoggedOut, (req, res, next) => {
   if (!username) {
     return res
       .status(400)
-      .json({ errorMessage: "Please provide your username." });
+      .json({ errorMessage: "Username is needed" });
   }
 
   // Here we use the same logic as above
@@ -105,13 +103,13 @@ router.post("/login", isLoggedOut, (req, res, next) => {
     .then((user) => {
       // If the user isn't found, send the message that user provided wrong credentials
       if (!user) {
-        return res.status(400).json({ errorMessage: "Wrong credentials." });
+        return res.status(400).json({ errorMessage: "Wrong username" });
       }
 
       // If user is found based on the username, check if the in putted password matches the one saved in the database
       bcrypt.compare(password, user.password).then((isSamePassword) => {
         if (!isSamePassword) {
-          return res.status(400).json({ errorMessage: "Wrong credentials." });
+          return res.status(400).json({ errorMessage: "Wrong password" });
         }
         req.session.user = user;
         // req.session.user = user._id; // ! better and safer but in this case we saving the entire user object
@@ -132,7 +130,7 @@ router.get("/logout", isLoggedIn, (req, res) => {
     if (err) {
       return res.status(500).json({ errorMessage: err.message });
     }
-    res.json({ message: "Done" });
+    res.json({ message: "Successful Log out" });
   });
 });
 
