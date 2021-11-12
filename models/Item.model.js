@@ -6,7 +6,7 @@ const { Schema, model } = mongoose;
 const itemSchema = new Schema({
   title: String,
   description: String,
-  collection: [{ type: Schema.Types.ObjectId, ref: 'Collection' }],
+  collections: { type: Schema.Types.ObjectId, ref: 'Collection'}
 });
 
-module.exports = model('Project', itemSchema);
+module.exports = model('Item', itemSchema);
