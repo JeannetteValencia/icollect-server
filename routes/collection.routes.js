@@ -17,16 +17,17 @@ router.get('/collections', (req, res, next) => {
 });
 
 
-// // POST route => to create a new project
+// POST route => to create a new project
 router.post('/collections', (req, res, next) => {
   const { title, description } = req.body;
 
   Collection.create({
     title,
     description,
-    //owner: req.user._id // <== !!!
+    owner: req.user._id
   })
-    .then(response => res.json(response))
+
+   .then(response => res.json(response))
     .catch(err => res.json(err));
 });
 
@@ -42,7 +43,7 @@ router.get('/collections/:collectionId', (req, res, next) => {
   //  we use .populate() method to get the whole items objects
   Collection.findById(collectionId)
     //.populate('items')
-    .then(collection => res.status(200).json(collection))
+    .then(collection => res.json(collection))
     .catch(error => res.json(error));
 });
 
