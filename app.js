@@ -20,26 +20,6 @@ const capitalized = (string) => string[0].toUpperCase() + string.slice(1).toLowe
 
 app.locals.title = `${capitalized(projectName)} created with IronLauncher`;
 
-// Packages used for authentication (Session & Passport)
-const session = require('express-session');
-const passport = require('passport');
-
-// Passport initial setup
-require('./config/passport');
-
-//Session settings: allows our app to maintain the sessions and our users in it
-app.use(
-  session({
-    secret: 'some secret goes here',
-    resave: true,
-    saveUninitialized: false
-  })
-);
-
-// To allow our app to use passport for auth
-app.use(passport.initialize());
-app.use(passport.session());
-
 // 👇 Start handling routes here
 // Contrary to the views version, all routes are controlled from the routes/index.js
 const indexRoutes = require("./routes");
