@@ -9,12 +9,12 @@ const Collection = require('../models/Collection.model');
 
 //POST route => to create a new item
 router.post('/items', (req, res, next) => {
-  const { title, description, collectionID } = req.body;
+  const { title, description,  collectionID} = req.body;
 
   Item.create({
     title,
     description,
-    collection: collectionID
+    collections: collectionID
   })
     // .then(newlyCreatedItemFromDB => {
     //   return Collection.findByIdAndUpdate(collectionID, {
