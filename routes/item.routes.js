@@ -14,7 +14,7 @@ router.post('/items', (req, res, next) => {
   Item.create({
     title,
     description,
-    collections: collectionID
+    collectionName: collectionID
   })
     // .then(newlyCreatedItemFromDB => {
     //   return Collection.findByIdAndUpdate(collectionID, {

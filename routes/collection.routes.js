@@ -17,7 +17,7 @@ router.get('/collections', (req, res, next) => {
 });
 
 
-// POST route => to create a new project
+// POST route => to create a new collection
 router.post('/collections', (req, res, next) => {
   const { title, description } = req.body;
 
