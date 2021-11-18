@@ -48,7 +48,7 @@ router.get('/collections/:collectionId', (req, res, next) => {
     return Item.find({collectionName: collectionId})
   })
   .then((itemsFromDB)=>{
-    response.items = itemsFromDB
+    response.arrOfItems = itemsFromDB
     res.json(response)
   })
   .catch(error => res.json(error));
