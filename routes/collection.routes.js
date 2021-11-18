@@ -34,17 +34,26 @@ router.post('/collections', (req, res, next) => {
 // GET route => to get a specific collection
 router.get('/collections/:collectionId', (req, res, next) => {
   const { collectionId } = req.params;
- 
+
   if (!mongoose.Types.ObjectId.isValid(collectionId)) {
     res.status(400).json({ message: 'Specified id is not valid' });
     return;
   }
- 
-  //  we use .populate() method to get the whole items objects
+
+  let response = {};
+
   Collection.findById(collectionId)
-    //.populate('items')
-    .then(collection => res.json(collection))
-    .catch(error => res.json(error));
+  .then(collectionFromDB => {
+    response = JSON.parse(JSON.stringify(collectionFromDB));
+    return Item.find({collectionName: collectionId})
+  })
+  .then((itemsFromDB)=>{
+    response.items = itemsFromDB
+    res.json(response)
+  })
+  .catch(error => res.json(error));
+
+  
 });
 
 // PUT route => to update a collection
