@@ -7,6 +7,29 @@ const mongoose = require('mongoose');
 const Item= require('../models/Item.model');
 const Collection = require('../models/Collection.model');
 
+//GET to get all the items of the collections
+router.get('/items', (req, res, next) => {
+  Item.find()
+    .then(allTheItems=> res.json(allTheItems))
+    .catch(err => res.json(err));
+});
+
+//to display the items of an specific collection
+router.get('/collections/:collectionId/items', (req, res, next) => {
+  const {collectionId} = req.params;
+  console.log("PARAMS>", req.params)
+  Collection.findById(collectionId)
+  .then((collectionfromDB) => {
+    console.log("collectionDETAILS ID", collectionfromDB)
+    return Item.find({collectionName: collectionfromDB})
+  })
+  .then((itemsfromDB)=>{
+    console.log("ITEMS FROM DB>>>>", itemsfromDB)
+    res.json(itemsfromDB)
+  })
+    .catch(error => res.json(error));
+});
+
 //POST route => to create a new item
 router.post('/items', (req, res, next) => {
   const { title, description,  collectionID} = req.body;
@@ -16,11 +39,7 @@ router.post('/items', (req, res, next) => {
     description,
     collectionName: collectionID
   })
-    // .then(newlyCreatedItemFromDB => {
-    //   return Collection.findByIdAndUpdate(collectionID, {
-    //     $push: { items: newlyCreatedItemFromDB._id }
-    //   });
-    // })
+    
     .then(response => res.json(response))
     .catch(err => res.json(err));
 });
