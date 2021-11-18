@@ -7,8 +7,9 @@
 
 ## Step 1 Creating the models
 
-[X] Collection model: title, description, owner, items
-[X] Items model: title, description, collection
+[X] Collection model: title, description, owner
+[X] Keep Single Source of Truth by removing items from Collection since the Items model will already have a reference by collectionID
+[X] Items model: title, description, collectionName
 [X] User model: name and password (email is not necessary)
 
 ## Step 2 Working on Authentication Routes
@@ -17,7 +18,7 @@
 [X] /login
 [X] /logout
 
-## Step 3 Creating the other routes
+## Step 3 Creating the Collection and Item routes
 
 [X] Collection Routes (POST, GET, UPDATE)
 [X] Items Routes (POST, GET, UPDATE)
