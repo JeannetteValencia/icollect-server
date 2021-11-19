@@ -14,11 +14,6 @@ const collectionSchema = new Schema({
     required: [true, "Description is required."],
   },
 
-  imageURL: {
-    type: String,
-    required: [true, "An image is required."],
-  },
-
   owner: { type: Schema.Types.ObjectId, ref: 'User' }
 });
 
